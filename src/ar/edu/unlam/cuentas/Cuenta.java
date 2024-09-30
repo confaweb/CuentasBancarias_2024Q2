@@ -64,9 +64,15 @@ public class Cuenta {
 		this.saldo+=importe;
 		
 	}
-	public  void extraer(Double importe) {
-		if(this.saldo>=importe)
-		this.saldo-=importe;
+	public  Boolean extraer(Double importe) {
+		Boolean extraccionExitosa=false;
+		
+		if(this.saldo>=importe) {
+		this.saldo-= importe;
+		
+		extraccionExitosa=true;
+		}
+		return extraccionExitosa;
 	}
 
 	@Override
