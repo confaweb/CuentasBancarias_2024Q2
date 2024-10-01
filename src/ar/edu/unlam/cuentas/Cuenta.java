@@ -60,16 +60,19 @@ public class Cuenta {
 	public void setTitular(Titular titular) {
 		this.titular = titular;
 	}
-	public void depositar(Double importe) {
-		this.saldo+=importe;
-		
+	public Boolean  depositar(Double importe) {
+		Boolean depositoExisoto=false;
+		if (importe>0) {
+			this.saldo+=importe;
+			depositoExisoto=true;
+		}		
+		return depositoExisoto;
 	}
+	
 	public  Boolean extraer(Double importe) {
-		Boolean extraccionExitosa=false;
-		
+		Boolean extraccionExitosa=false;		
 		if(this.saldo>=importe) {
-		this.saldo-= importe;
-		
+		this.saldo-= importe;		
 		extraccionExitosa=true;
 		}
 		return extraccionExitosa;

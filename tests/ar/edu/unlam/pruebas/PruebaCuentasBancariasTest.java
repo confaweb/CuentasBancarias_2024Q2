@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import ar.edu.unlam.cuentas.CajaDeAhorro;
 import ar.edu.unlam.cuentas.Cuenta;
+import ar.edu.unlam.cuentas.CuentaCorriente;
 import ar.edu.unlam.cuentas.CuentaSueldo;
 import ar.edu.unlam.cuentas.enums.TipoOperacion;
 import ar.edu.unlam.cuentas.enums.TipoPersoneria;
@@ -117,5 +118,61 @@ public class PruebaCuentasBancariasTest {
 		assertEquals(ve, vo, 0.1);
 
 	}
+	@Test // #5
+	public void queAlDepositar1000EnUnaCuentaCorrienteConSaldoIgualACeroSuSaldoFinalSea1000  () {
+		// ENTRADA
+		String nombre = "Pedro", apellido = "Sanchez";
+		Integer dni = 111111;
+		TipoPersoneria tipoPersoneria = TipoPersoneria.FISICA;
+		Titular titular = new Titular(nombre, apellido, dni, tipoPersoneria);
+		Integer numDeCuenta = 990001, cbu = 400000440;
+		Double saldo = 0.0;
+		TipoOperacion tipoOperacion = TipoOperacion.EXTRACCION;		
+		
+		Double descubierto=3000.0;
+		Double comisionPorDescubierto=0.05;
+		Cuenta cuentCorriente = new CuentaCorriente(titular, numDeCuenta, cbu, saldo,descubierto,comisionPorDescubierto, tipoOperacion);		
+
+		// PROCESO
+		Double importe = 1000.0;
+		
+		assertTrue(cuentCorriente.depositar(importe));		
+
+		// SALIDA
+		Double ve = 1000.0;
+		Double vo = cuentCorriente.getSaldo();
+		assertEquals(ve, vo, 0.1);
+
+	}
+	@Test // #6
+	public void queSeCobre5PorCientoDeComisionAlDepositarDineroLuegoDeHaberRealizadoUnaExtraccionMayorAlSaldoEnUnaCuentaCorriente  () {
+		// ENTRADA
+		String nombre = "Pedro", apellido = "Sanchez";
+		Integer dni = 111111;
+		TipoPersoneria tipoPersoneria = TipoPersoneria.FISICA;
+		Titular titular = new Titular(nombre, apellido, dni, tipoPersoneria);
+		Integer numDeCuenta = 990001, cbu = 400000440;
+		Double saldo = 0.0;
+		Double descubierto=2000.0;
+		Double comisionPorDescubierto=0.05;
+		TipoOperacion tipoOperacion = TipoOperacion.EXTRACCION;		
+		
+		Cuenta cuentCorriente = new CuentaCorriente(titular, numDeCuenta, cbu, saldo,descubierto,comisionPorDescubierto, tipoOperacion);		
+
+		// PROCESO
+		Double importe = 1000.0;
+		Double importeDeposito=2000.0;
+		
+		assertTrue(cuentCorriente.extraer(importe));
+		assertTrue(cuentCorriente.depositar(importeDeposito));
+
+		// SALIDA
+		Double ve = 950.0;
+		Double vo = cuentCorriente.getSaldo();
+		assertEquals(ve, vo, 0.1);
+
+	}
+
+
 
 }
