@@ -144,7 +144,7 @@ public class PruebaCuentasBancariasTest {
 		assertEquals(ve, vo, 0.1);
 
 	}
-	@Test // #6
+	@Test /// #6
 	public void queSeCobre5PorCientoDeComisionAlDepositarDineroLuegoDeHaberRealizadoUnaExtraccionMayorAlSaldoEnUnaCuentaCorriente  () {
 		// ENTRADA
 		String nombre = "Pedro", apellido = "Sanchez";
