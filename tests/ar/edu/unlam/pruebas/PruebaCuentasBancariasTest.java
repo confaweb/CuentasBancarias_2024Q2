@@ -170,9 +170,35 @@ public class PruebaCuentasBancariasTest {
 		Double ve = 950.0;
 		Double vo = cuentCorriente.getSaldo();
 		assertEquals(ve, vo, 0.1);
-
 	}
 
+	@Test /// #6
+	public void queSeObtengaDeManeraCorrectaElListadoDeClientesVip(){
+		// ENTRADA
+		String nombre = "Pedro", apellido = "Sanchez",nombreBanco="Banco Confa";
+		Integer dni = 111111,cuit=303333338;
+		TipoPersoneria tipoPersoneria = TipoPersoneria.FISICA;
+		Titular titular = new Titular(nombre, apellido, dni, tipoPersoneria);
+		Integer numDeCuenta = 990001, cbu = 400000440;
+		Double saldo = 0.0;
+		Double descubierto=2000.0;
+		Double comisionPorDescubierto=0.05;
+		TipoOperacion tipoOperacion = TipoOperacion.EXTRACCION;		
+		Banco banco1 = new Banco(nombreBanco,cuit);
 
+		Cuenta cuentCorriente = new CuentaCorriente(titular, numDeCuenta, cbu, saldo,descubierto,comisionPorDescubierto, tipoOperacion);		
+	
+		// PROCESO
+		Double importe = 1000.0;
+		Double importeDeposito=2000.0;
+			
+		assertTrue(cuentCorriente.extraer(importe));
+		assertTrue(cuentCorriente.depositar(importeDeposito));
+	
+		// SALIDA
+		Double ve = 950.0;
+		Double vo = cuentCorriente.getSaldo();
+		assertEquals(ve, vo, 0.1);
+	}
 
 }
