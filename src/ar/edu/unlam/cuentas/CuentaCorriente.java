@@ -43,13 +43,12 @@ public class CuentaCorriente extends Cuenta {
 	@Override
 	public Boolean extraer(Double importe) {
 		Boolean extraccionExitosa = false;
-		Double nuevoSaldo = super.getSaldo() - importe;
+		Double nuevoSaldo = this.getSaldo() - importe;
 		super.setSaldo(nuevoSaldo);
 		if (super.getSaldo() < 0) {
 			calcularComision();
 			extraccionExitosa=true;
 		}
-
 		return extraccionExitosa;
 	}
 
@@ -57,37 +56,33 @@ public class CuentaCorriente extends Cuenta {
 	public Boolean depositar(Double importe) {
 		Boolean depositoExitoso = false;
 		if (importe > 0) {			
-			super.setSaldo(super.getSaldo() + importe);
+			this.setSaldo(this.getSaldo()+ importe);
 			depositoExitoso = true;
-			cobrarComisionesPendientes();
+			cobrarComision();
 			
 		}
 
 		return depositoExitoso;
 	}
 
-	private Boolean cobrarComisionesPendientes() {
+	private Boolean cobrarComision() {
 		Boolean comisionesCobradas = false;
-		if (super.getSaldo() > 0) {
-			Double nuevoSaldo = super.getSaldo() - this.getComisionesPendientes();
+		if (this.getSaldo() > 0) {
+			calcularComision();
+			Double nuevoSaldo = this.getSaldo()- this.calcularComision();
 			super.setSaldo(nuevoSaldo);
 			comisionesCobradas = true;
 		}
 		return comisionesCobradas;
-
 	}
 
-	private void calcularComision() {
-		
-		if (super.getSaldo() < 0) {
-			Double comision = (-1) * super.getSaldo() * 100 * this.comisionPorDescubierto;
-			this.comisionesPendientes += comision;
-		} 
-			setComisionesPendientes (0.0);
-
-		
-		
-
+	private Double calcularComision() {
+		Double comision=0.0;
+		if (this.getSaldo() < 0) {
+			
+			 comision = (-1) * super.getSaldo() * 100 * this.comisionPorDescubierto;
+			
+		} return comision;
 	}
 
 }
